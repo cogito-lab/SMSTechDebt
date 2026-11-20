@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prompt_spec version="1.0">
+  <metadata>
+    <title>Technical Debt Literature Relevance Classifier — XML Prompt</title>
+    <description>
+      Systematic Mapping Study (SMS) prompt to classify BibTeX entries (1–5 stars)
+      for Technical Debt research.
+    </description>
+  </metadata>
+
+  <context>
+    <study_overview>
+      You are assisting in a Systematic Mapping Study (SMS) on Technical Debt in Software Engineering.
+      Your task is to analyze a list of BibTeX references and assign a relevance rating (1 to 5 stars)
+      to each reference, indicating how closely it aligns with the study's goal and research questions (RQs).
+    </study_overview>
+
+    <search_string><![CDATA[
+("technical debt" OR "code debt" OR "design debt" OR "architecture debt" OR 
+"test debt" OR "documentation debt" OR "devops debt" OR "infrastructure debt" OR 
+"build debt" OR "requirement debt" OR "debt technology" OR "process debt" OR 
+"social debt" OR "people debt" OR "bad smell*" OR "code smell*" OR "design smell*" OR 
+"architecture smell*")
+    ]]></search_string>
+
+    <goal>
+      Our goal is to construct a comprehensive taxonomy of Technical Debt types and to map AI-based
+      tools and techniques employed for their detection across software systems.
+    </goal>
+
+    <research_questions>
+      <rq id="RQ1">
+        <question>What types of Technical Debt are investigated in the literature?</question>
+        <purpose>
+          Identify and classify the different TD types studied (e.g., code, design, architecture,
+          documentation, testing, requirements).
+        </purpose>
+        <outcome>Frequency distribution and taxonomy of TD types.</outcome>
+      </rq>
+
+      <rq id="RQ2">
+        <question>What methods, tools, and techniques are used to detect or manage Technical Debt?</question>
+        <purpose>
+          Capture the range of approaches (manual reviews, rule-based detection, metrics analysis,
+          visualization tools, AI-based methods).
+        </purpose>
+        <outcome>Categorization by methodological approach and tool support.</outcome>
+      </rq>
+
+      <rq id="RQ3">
+        <question>What metrics and datasets are used to evaluate Technical Debt studies?</question>
+        <purpose>Understand the empirical foundations, data sources, and evaluation criteria.</purpose>
+        <outcome>Map of metrics, datasets, and validation practices.</outcome>
+      </rq>
+
+      <rq id="RQ4">
+        <question>How have Technical Debt studies evolved over time?</question>
+        <purpose>
+          Identify publication trends, venues, and temporal focus on specific TD types or techniques.
+        </purpose>
+        <outcome>Temporal analysis and evolution timeline.</outcome>
+      </rq>
+
+      <rq id="RQ5">
+        <question>What are the reported challenges, limitations, and future research directions?</question>
+        <purpose>Synthesize qualitative insights regarding barriers, open issues, and research needs.</purpose>
+        <outcome>Categorized list of challenges and future opportunities.</outcome>
+      </rq>
+
+      <rq id="RQ6">
+        <question>What are the characteristics of AI-based approaches for Technical Debt detection?</question>
+        <purpose>Deepen understanding of AI's role as a specific detection approach.</purpose>
+        <outcome>
+          Mapping of AI-based techniques (ML, DL, NLP), their target TD types, datasets, and performance metrics.
+        </outcome>
+      </rq>
+    </research_questions>
+  </context>
+
+  <task>
+    <instructions>
+      You will receive a BibTeX file containing one or more entries. For each entry, analyze its title,
+      abstract (if present), and keywords to determine its relevance to the Systematic Mapping Study (SMS)
+      on Technical Debt (TD), according to the study goal, research questions (RQ1–RQ6), and the Decision
+      Criteria (1–5 stars) provided below.
+
+      Steps:
+      1. Read the title, abstract, and keywords of each BibTeX entry.
+      2. Identify whether the study discusses Technical Debt explicitly or through related software quality concepts.
+      3. Compare its content to the study goal and RQs to assess alignment.
+      4. Use the Decision Criteria (1–5 stars) to determine relevance.
+      5. Assign a relevance rating (1–5 stars) based on the rating scale section.
+      6. Append two new fields to each BibTeX entry:
+         - relevance_rating={1|2|3|4|5}
+         - comment={Short one-line justification for the assigned rating}
+      7. Ensure that justification comments are added for all entries, with especially clear reasons for
+         4-star and 5-star papers.
+      8. Preserve all original BibTeX fields and formatting.
+      9. Return the enriched BibTeX file containing all processed entries.
+    </instructions>
+  </task>
+
+  <rating_scale>
+    <stars value="5" label="Highly Relevant">
+      <definition>Explicit and central focus on Technical Debt and its detection, management, or analysis.</definition>
+      <decision_criteria>
+        <item>Explicitly mentions “Technical Debt” or related terms (e.g., code debt, design debt, architecture debt, bad smell*, code smell*).</item>
+        <item>Main contribution addresses TD detection, measurement, tools, AI-based approaches, empirical study, taxonomy, or evolution analysis.</item>
+        <item>Abstract clearly supports at least one goal or RQ (e.g., RQ1–RQ6).</item>
+        <item>Situated in software engineering domain.</item>
+        <item>If AI/ML/NLP methods are mentioned, they are explicitly applied to TD detection or management.</item>
+      </decision_criteria>
+    </stars>
+
+    <stars value="4" label="Potentially Relevant">
+      <definition>Indirect link to Technical Debt but strongly related to software quality concepts that inform TD research.</definition>
+      <decision_criteria>
+        <item>Studies code/design/architecture smells, anti-patterns, refactoring needs, maintainability, software aging, or quality metrics.</item>
+        <item>Partially aligns with goals/RQs (e.g., tools/techniques adaptable to TD detection, datasets/metrics, trends in software quality).</item>
+        <item>Clearly in software engineering domain.</item>
+        <item>Provides insights or methods relevant to TD taxonomy or detection even if TD is not explicitly stated.</item>
+      </decision_criteria>
+    </stars>
+
+    <stars value="3" label="Low Relevance">
+      <definition>Software engineering paper with weak or indirect connection to TD.</definition>
+      <decision_criteria>
+        <item>Belongs to software engineering but TD is not main objective.</item>
+        <item>Mention of maintainability/refactoring/metrics only in passing.</item>
+        <item>TD may appear only as motivation; not investigated.</item>
+        <item>Limited alignment with RQs.</item>
+        <item>No novel TD contribution.</item>
+      </decision_criteria>
+    </stars>
+
+    <stars value="2" label="Marginal Relevance">
+      <definition>Peripheral or tangential to TD; minimal potential contribution to SMS goal.</definition>
+      <decision_criteria>
+        <item>Weak software engineering connection, not addressing maintainability, quality, smells, refactoring, architecture, or TD.</item>
+        <item>TD not mentioned or only in passing.</item>
+        <item>Minimal alignment with RQs 1,2,3,6.</item>
+        <item>Domain fit is software-related but peripheral (automation, frameworks, productivity).</item>
+      </decision_criteria>
+    </stars>
+
+    <stars value="1" label="Irrelevant">
+      <definition>Completely outside the scope of software engineering TD; no contribution to SMS.</definition>
+      <decision_criteria>
+        <item>No mention of TD or related terms.</item>
+        <item>Primary focus outside software engineering.</item>
+        <item>Abstract discusses non-software outcomes (e.g., finance, medicine, physics).</item>
+        <item>Software/data processing only as implementation detail.</item>
+        <item>No contribution to TD types, detection tools, or management.</item>
+      </decision_criteria>
+    </stars>
+  </rating_scale>
+
+  <output_format>
+    <instructions>
+      Return the same BibTeX file, appending two new fields to each entry:
+      - relevance_rating={1|2|3|4|5}
+      - comment={Short one-line justification of your rating}
+      Preserve all original fields and formatting.
+    </instructions>
+
+    <bibtex_example><![CDATA[
+@article{doe2023,
+  title={Machine Learning for Architecture Debt Detection},
+  author={Doe, Jane and Smith, John},
+  year={2023},
+  journal={Journal of Software Engineering Research},
+  keywords={technical debt, architecture debt, machine learning},
+  relevance_rating={5},
+  comment={Directly targets architecture debt detection with ML; aligns with RQ2 and RQ6.}
+}
+    ]]></bibtex_example>
+  </output_format>
+
+  <evaluation_procedure>
+    <step>Read title, abstract, and keywords (if provided).</step>
+    <step>Check for explicit TD keywords.</step>
+    <step>Map the paper's contributions to RQ1–RQ6.</step>
+    <step>Decide which star-level criteria the paper satisfies (1–5).</step>
+    <step>Assign relevance_rating (1–5) and add a concise one-line comment.</step>
+    <step>Return the original BibTeX entry with the two appended fields.</step>
+  </evaluation_procedure>
+
+  <examples>
+    <example>
+      <title>Machine Learning for Architecture Debt Detection</title>
+      <rating>5</rating>
+      <comment>Directly targets TD (architecture debt) using ML; supports RQ2 and RQ6 and contributes to detection tools and empirical evaluation.</comment>
+    </example>
+
+    <example>
+      <title>Evolution of Technical Debt in Open-Source Projects</title>
+      <rating>5</rating>
+      <comment>Empirical study of TD evolution and trends; aligns with RQ1 and RQ4 and contributes to taxonomy and temporal analysis.</comment>
+    </example>
+
+    <example>
+      <title>Identifying Code Smells via Static Analysis Metrics</title>
+      <rating>4</rating>
+      <comment>Addresses code smells and provides metrics/tools applicable to TD detection; indirectly supports RQ1 and RQ2.</comment>
+    </example>
+
+    <example>
+      <title>We evaluate maintainability metrics for Java projects</title>
+      <rating>3</rating>
+      <comment>Software quality/maintainability focus but TD is not the main objective; limited alignment with RQs.</comment>
+    </example>
+
+    <example>
+      <title>We present a CI/CD pipeline for automated testing</title>
+      <rating>2</rating>
+      <comment>Peripheral to TD research (automation/DevOps focus) and provides minimal contribution to TD detection or taxonomy.</comment>
+    </example>
+
+    <example>
+      <title>AI for Credit Risk Prediction in Finance</title>
+      <rating>1</rating>
+      <comment>Non-software domain (finance) using AI for domain prediction; no link to TD or software quality.</comment>
+    </example>
+  </examples>
+</prompt_spec>
